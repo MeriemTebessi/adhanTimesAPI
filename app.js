@@ -14,12 +14,12 @@ app.get('/v1/', (req, res, next) => {
   res.send({message : 'Welcome. API Version v1 - 1.0.0 - Author: Meriem Tebessi'});
 });
 
-app.get('/v1/adhanTimes', (req, res, next) => {
+app.get('/v1/today', (req, res, next) => {
   let sCity = req.query.city;
   let sCountry = req.query.country;
   if ((sCity == undefined)||(sCountry == undefined)){
 	  res.status(400).json({
-		  "message": "Bad Request. City and country parameters are required. Please try again using this example: GET /v1/adhanTimes?city=Paris&country=France"
+		  "message": "Bad Request. City and country parameters are required. Please try again using this example: GET /v1/today?city=Paris&country=France"
 	  });
   }else{
 	    let defaultvalue = {
@@ -29,11 +29,9 @@ app.get('/v1/adhanTimes', (req, res, next) => {
 				"longitude": 0,
 				"city": "Neuilly sur seine",
 				"pays": "France"
-			 },
-			"items":[
-				{
-				"date" : "2023-09-16",
-				"timings": {
+			 },			
+			"date" : "2023-09-16",
+			"timings": {
 					"Fajr": "-",
 					"Sunrise": "-",
 					"Dhuhr": "-",
@@ -44,8 +42,8 @@ app.get('/v1/adhanTimes', (req, res, next) => {
 					"Imsak": "-",
 					"Midnight": "-",
 					"Firstthird": "-",
-					"Lastthird": "-"}
-				}]
+					"Lastthird": "-"
+				}			
 							};
 	    let jsonDefaultValue = JSON.stringify(defaultvalue);
 	    res.status(200).json(jsonDefaultValue);
