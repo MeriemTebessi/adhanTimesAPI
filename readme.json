@@ -1,0 +1,25 @@
+[
+  "meta": {
+    "timezone": "Europe/Paris",
+	"latitude": 48.887261,
+    "longitude": 2.26982,
+	"city": "Neuilly sur seine",
+	"pays": "France"
+{
+   "items":[
+   {
+    "date" : "2023-09-16",
+    "timings": {
+        "Fajr": "06:18",
+        "Sunrise": "07:28",
+        "Dhuhr": "13:55 (CEST)",
+        "Asr": "17:28 (CEST)",
+        "Sunset": "20:22 (CEST)",
+        "Maghrib": "20:22 (CEST)",
+        "Isha": "21:32 (CEST)",
+        "Imsak": "06:08 (CEST)",
+        "Midnight": "01:55 (CEST)",
+        "Firstthird": "00:04 (CEST)",
+        "Lastthird": "03:46 (CEST)"
+		}
+]
