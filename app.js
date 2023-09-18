@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const request = require('request');
 
 app.use(express.json());
 
@@ -17,38 +18,56 @@ app.get('/v1/', (req, res, next) => {
 app.get('/v1/today', (req, res, next) => {
   let sCity = req.query.city;
   let sCountry = req.query.country;
+  let jourmois = new Date().getDate();
+  let mois = new Date().getMonth();
+  mois = mois+1;
+  let annee = new Date().getFullYear();
+  let date = '"'+jourmois+"-"+mois+"-"+annee+'"';
+  console.log(date);  
   if ((sCity == undefined)||(sCountry == undefined)){
 	  res.status(400).json({
 		  "message": "Bad Request. City and country parameters are required. Please try again using this example: GET /v1/today?city=Paris&country=France"
 	  });
   }else{
-	    let defaultvalue = {
-			 "meta": {
-				"timezone": "-",
-				"latitude": 0,
-				"longitude": 0,
-				"city": "Neuilly sur seine",
-				"pays": "France"
-			 },			
-			"date" : "2023-09-16",
-			"timings": {
-					"Fajr": "-",
-					"Sunrise": "-",
-					"Dhuhr": "-",
-					"Asr": "-",
-					"Sunset": "-",
-					"Maghrib": "-",
-					"Isha": "-",
-					"Imsak": "-",
-					"Midnight": "-",
-					"Firstthird": "-",
-					"Lastthird": "-"
-				}			
-							};
-	    let jsonDefaultValue = JSON.stringify(defaultvalue);
-	    res.status(200).json(jsonDefaultValue);
-   }; // fin else	  
-		  
+	  let surl = "http://api.aladhan.com/v1/timingsByCity?city="+sCity+"&country="+sCountry;
+	  let url = new URL (surl);
+	  request({
+		  url: url,
+		  method: 'GET'	  }, function (error, response, body){
+		  if (!error){
+			  var resp = JSON.parse(body);
+			  res.status(200).json({
+									"meta": {
+										    "date": resp.data.date.gregorian.date, //format: "01-04-2017"
+											"hijriDate": resp.data.date.hijri.date,
+											"timezone": resp.data.meta.timezone,
+											"latitude": resp.data.meta.method.location.latitude,
+											"longitude": resp.data.meta.method.location.longitude,
+											"city": sCity,
+											"pays": sCountry
+											},			
+									"timings": {
+											"Fajr": resp.data.timings.Fajr,
+											"Sunrise": resp.data.timings.Sunrise,
+											"Dhuhr": resp.data.timings.Dhuhr,
+											"Asr": resp.data.timings.Asr,
+											"Sunset": resp.data.timings.Sunset,
+											"Maghrib": resp.data.timings.Maghrib,
+											"Isha": resp.data.timings.Isha,
+											"Imsak": resp.data.timings.Imsak,
+											"Midnight": resp.data.timings.Midnight,
+											"Firstthird": resp.data.timings.Firstthird,
+											"Lastthird":resp.data.timings.Lastthird,
+											}			
+									}); // fin déclaration de la réponse 200
+		  }//fin if
+		  else {
+			  res.status(500).json({
+				  "message": "désolé, une erreur technique est parvenue."
+			  });			  
+			  };// fin else de controle sur l'erreur de reponse de api externe
+		  });	    
+   }; // fin else sur le controle des params mandatory	  		  
 });
 
   app.use((req, res) => {
