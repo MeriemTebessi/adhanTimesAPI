@@ -39,7 +39,13 @@ app.get('/v1/today', (req, res, next) => {
 			  res.status(200).json({
 									"meta": {
 										    "date": resp.data.date.gregorian.date, //format: "01-04-2017"
-											"hijriDate": resp.data.date.hijri.date,
+											"hijriDate": {
+												"date" :resp.data.date.hijri.date,
+												"day" :resp.data.date.hijri.day,
+												"month" :resp.data.date.hijri.month.number,
+												"monthDescription" :resp.data.date.hijri.month.en,
+												"year" :resp.data.date.hijri.year,
+											},
 											"timezone": resp.data.meta.timezone,
 											"latitude": resp.data.meta.method.location.latitude,
 											"longitude": resp.data.meta.method.location.longitude,
