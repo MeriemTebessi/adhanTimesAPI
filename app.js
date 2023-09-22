@@ -18,12 +18,6 @@ app.get('/v1/', (req, res, next) => {
 app.get('/v1/today', (req, res, next) => {
   let sCity = req.query.city;
   let sCountry = req.query.country;
-  let jourmois = new Date().getDate();
-  let mois = new Date().getMonth();
-  mois = mois+1;
-  let annee = new Date().getFullYear();
-  let date = '"'+jourmois+"-"+mois+"-"+annee+'"';
-  console.log(date);  
   if ((sCity == undefined)||(sCountry == undefined)){
 	  res.status(400).json({
 		  "message": "Bad Request. City and country parameters are required. Please try again using this example: GET /v1/today?city=Paris&country=France"
