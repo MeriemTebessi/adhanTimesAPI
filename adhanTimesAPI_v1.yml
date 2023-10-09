@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: Adhan Times API
+  description: API endpoints for prayers times management
+  contact:
+    email: meriem.tebessi@gmail.com
+  version: 1.0.0
+servers:
+  - url: 'https://adhan-times-api.vercel.app/v1'
+    description: Live api
+paths:
+  '/today':
+    get:
+      summary: Returns prayers times of current day
+      description: 'Given a location, returns the corresponding prayers times'
+      operationId: getTimesByCity
+      parameters:
+        - name: city
+          required: true
+          in: query
+          description: 'city location'
+          schema:
+            type: string
+            example: Paris
+        - name: country
+          required: true
+          in: query
+          description: 'country location'
+          schema:
+            type: string
+            example: France
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseforToday'
+components:
+  schemas:
+    ResponseforToday:
+      properties:
+          meta:
+            properties:
+              date:
+                description: current date
+                example: '25-09-2023'
+                readOnly: true
+                type: string
+              hijriDate:
+                properties: 
+                  date:
+                    description: hijri current date
+                    example: "10-03-1445"
+                    type: string
+                  day:
+                    description: day
+                    example: "10"
+                    type: string
+                  month:
+                    description: month
+                    example: 3
+                    type: integer
+                  monthDescription:
+                    description: monthDescription
+                    example: "Rabīʿ al-awwal"
+                    type: string
+                  year:
+                    description: year
+                    example: "1445"
+                    type: string              
+                type: object
+              timezone:
+                description: timezone
+                example: "Europe/Paris"
+                readOnly: true
+                type: string
+              latitude:
+                description: latitude
+                example: 	48.856614
+                readOnly: true
+                type: number
+              longitude:
+                description: longitude
+                example: 2.3522219
+                readOnly: true
+                type: number
+              city:
+                description: city
+                example: "Paris"
+                type: string
+              country:
+                description: country
+                example: "France"
+                type: string
+            type: object
+          timings:
+            properties:
+              Fajr:
+                description: Fajr
+                example: "06:32"
+                type: string
+              Sunrise:
+                description: Sunrise
+                example: "07:41"
+                type: string
+              Dhuhr:
+                description: Dhuhr
+                example: "13:42"
+                type: string
+              Asr:
+                description: Asr
+                example: 	"17:01"
+                type: string
+              Sunset:
+                description: Sunset
+                example: "19:43"
+                type: string
+              Maghrib:
+                description: Maghrib
+                example: "19:43"
+                type: string
+              Isha:
+                description: Isha
+                example: "20:51"
+                type: string
+              Imsak:
+                description: Imsak
+                example: "06:22"
+                type: string
+              Midnight:
+                description: Midnight
+                example: "01:42"
+                type: string
+              Firstthird:
+                description: Firstthird
+                example: "23:42"
+                type: string
+              Lastthird:
+                description: Lastthird
+                example: "02:42"
+                type: string
+            type: object
+      type: object        
