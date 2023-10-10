@@ -87,11 +87,11 @@ app.get('/v1/currentMonth', (req, res, next) => {
 		  if (!error){
 			  var resp = JSON.parse(body);
 		      var JSONresponse = [];
-			  for(var i = 0; i < resp.data.length; i++) {      
-                JSONresponse.push(
-					{
+			  for(var i = 0; i < resp.data.length; i++) {   		  
+                JSONresponse.push({
 									"meta": {
 										    "date": resp.data[i].date.gregorian.date, //format: "01-04-2017"
+											"day": resp.data[i].date.gregorian.day,
 											"hijriDate": {
 												"date" :resp.data[i].date.hijri.date,
 												"day" :resp.data[i].date.hijri.day,
@@ -118,7 +118,7 @@ app.get('/v1/currentMonth', (req, res, next) => {
 											"Firstthird": resp.data[i].timings.Firstthird,
 											"Lastthird":resp.data[i].timings.Lastthird,
 											}			
-									}
+			  }
 				);
 }
 			  res.status(200).json(JSONresponse); // fin déclaration de la réponse 200
