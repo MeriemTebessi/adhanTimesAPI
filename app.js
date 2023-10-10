@@ -44,7 +44,7 @@ app.get('/v1/today', (req, res, next) => {
 											"latitude": resp.data.meta.method.location.latitude,
 											"longitude": resp.data.meta.method.location.longitude,
 											"city": sCity,
-											"pays": sCountry
+											"country": sCountry
 											},			
 									"timings": {
 											"Fajr": resp.data.timings.Fajr,
@@ -103,7 +103,7 @@ app.get('/v1/currentMonth', (req, res, next) => {
 											"latitude": resp.data[i].meta.method.location.latitude,
 											"longitude": resp.data[i].meta.method.location.longitude,
 											"city": sCity,
-											"pays": sCountry
+											"country": sCountry
 											},			
 									"timings": {
 											"Fajr": resp.data[i].timings.Fajr,
